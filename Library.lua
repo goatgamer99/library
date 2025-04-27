@@ -35,7 +35,7 @@ local Library = {
     OutlineColor = Color3.fromRGB(28, 28, 28);
     RiskColor = Color3.fromRGB(255, 50, 50),
 
-    Black = Color3.fromRGB(255, 130, 150);
+    Black = Color3.fromRGB(0, 0, 0);
     Font = Enum.Font.SciFi,
 
     OpenedFrames = {};
