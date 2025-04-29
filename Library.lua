@@ -36,7 +36,7 @@ local Library = {
     RiskColor = Color3.fromRGB(255, 50, 50),
 
     Black = Color3.fromRGB(0, 0, 0);
-    Font = Enum.Font.SciFi,
+    Font = Enum.Font.Sarpanch,
 
     OpenedFrames = {};
 
