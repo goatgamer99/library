@@ -892,14 +892,18 @@ do
         };
 
         function KeyPicker:NameToKey(Name)
-            if typeof(Name) == "string" then
-                if Name == "MB1" then
-                    return Enum.UserInputType.MouseButton1;
-                elseif Name == "MB2" then
-                    return Enum.UserInputType.MouseButton2;
-                else
-                    return DoesEnumExist(Enum.KeyCode, Name) or DoesEnumExist(Enum.UserInputType, Name);
-                end
+    if typeof(Name) == "string" then
+        if Name == "MB1" then
+            return Enum.UserInputType.MouseButton1
+        elseif Name == "MB2" then
+            return Enum.UserInputType.MouseButton2
+        elseif Name == "MB4" then
+            return Enum.UserInputType.MouseButton4
+        elseif Name == "MB5" then
+            return Enum.UserInputType.MouseButton5
+        else
+            return DoesEnumExist(Enum.KeyCode, Name) or DoesEnumExist(Enum.UserInputType, Name)
+        end
             elseif typeof(Name) == "EnumItem" and table.find({Enum.KeyCode, Enum.UserInputType}, Name.EnumType) then
                 return Name;
             end;
