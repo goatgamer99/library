@@ -891,25 +891,24 @@ do
             IgnoreProcessedCheck = Info.IgnoreProcessedCheck or false;
         };
 
-        function KeyPicker:NameToKey(Name)
+function KeyPicker:NameToKey(Name)
     if typeof(Name) == "string" then
-        if Name == "MB1" then
+        if Name == "XButton1" then
+            return Enum.KeyCode.XButton1
+        elseif Name == "XButton2" then
+            return Enum.KeyCode.XButton2
+        elseif Name == "MB1" then
             return Enum.UserInputType.MouseButton1
         elseif Name == "MB2" then
             return Enum.UserInputType.MouseButton2
-        elseif Name == "MB4" then
-            return Enum.UserInputType.MouseButton4
-        elseif Name == "MB5" then
-            return Enum.UserInputType.MouseButton5
         else
             return DoesEnumExist(Enum.KeyCode, Name) or DoesEnumExist(Enum.UserInputType, Name)
         end
-            elseif typeof(Name) == "EnumItem" and table.find({Enum.KeyCode, Enum.UserInputType}, Name.EnumType) then
-                return Name;
-            end;
-
-            error("invalid key value");
-        end;
+    elseif typeof(Name) == "EnumItem" then
+        return Name
+    end
+    error("Invalid key value")
+end
         function KeyPicker:KeyName(Key)
             Key = Key or KeyPicker.Value;
             local Name = Key.Name;
