@@ -44,16 +44,18 @@ local SaveManager = {} do
 				end
 			end,
 		},
-		KeyPicker = {
-			Save = function(idx, object)
-				return { type = 'KeyPicker', idx = idx, mode = object.Mode, key = object.Value }
-			end,
-			Load = function(idx, data)
-				if Options[idx] then
-					Options[idx]:SetValue({ data.key, data.mode })
-				end
-			end,
-		},
+        KeyPicker = {
+            Save = function(idx, object)
+                local keyName = object.Value and object.Value.Name or "Unknown"
+                return { type = 'KeyPicker', idx = idx, mode = object.Mode, key = keyName }
+            end,
+            Load = function(idx, data)
+                if Options[idx] then
+                    local keyEnum = Enum.KeyCode[data.key] or Enum.UserInputType[data.key]
+                    Options[idx]:SetValue({ keyEnum, data.mode })
+                end
+            end,
+        },
 
 		Input = {
 			Save = function(idx, object)
