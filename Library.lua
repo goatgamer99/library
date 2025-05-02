@@ -80,15 +80,14 @@ local function GetTeamsString()
     return TeamList;
 end;
 
-local function DoesEnumExist(EnumType, Enum)
-    local success, result = pcall(function()
-        return EnumType[Enum];
-    end);
-
-    if success then
-        return result;
+local function DoesEnumExist(EnumType, Name)
+    for _, enumItem in ipairs(EnumType:GetEnumItems()) do
+        if enumItem.Name == Name then
+            return enumItem
+        end
     end
-end;
+    return nil
+end
 local function IsKeyPressed(Key)
     if Key.EnumType == Enum.KeyCode then
         return InputService:IsKeyDown(Key);
