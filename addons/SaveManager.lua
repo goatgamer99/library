@@ -179,11 +179,13 @@ local SaveManager = {} do
 	function SaveManager:LoadAutoloadConfig()
 		if isfile(self.Folder .. '/settings/autoload.txt') then
 			local name = readfile(self.Folder .. '/settings/autoload.txt')
-
-			local success, err = self:Load(name)
-			end
-		end
-	end
+ 
+ 			local success, err = self:Load(name)
+ 			if not success then
+ 				return
+ 			end
+ 		end
+ 	end
 
 
 	function SaveManager:BuildConfigSection(tab)
