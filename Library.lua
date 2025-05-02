@@ -381,11 +381,6 @@ function Library:Unload()
         Library.OnUnload()
     end
 
-    if Library.BlurEffect then
-        Library.BlurEffect:Destroy()
-        Library.BlurEffect = nil
-    end
-
     ScreenGui:Destroy()
 end
 
@@ -3299,42 +3294,32 @@ function Library:CreateWindow(...)
         Parent = ScreenGui;
     });
 
-function Library.Toggle()
-    Outer.Visible = not Outer.Visible;
-    ModalElement.Modal = Outer.Visible;
+    function Library.Toggle()
+        Outer.Visible = not Outer.Visible;
+        ModalElement.Modal = Outer.Visible;
 
-    if not Library.BlurEffect then
-        Library.BlurEffect = Instance.new("DepthOfFieldEffect")
-        Library.BlurEffect.Name = "UIBlur"
-        Library.BlurEffect.FarIntensity = 0
-        Library.BlurEffect.NearIntensity = 10
-        Library.BlurEffect.InFocusRadius = 50
-        Library.BlurEffect.Parent = game:GetService("Lighting")
+        local oIcon = Mouse.Icon;
+        local State = InputService.MouseIconEnabled;
+
+        local Cursor = Drawing.new('Triangle');
+        Cursor.Thickness = 1;
+        Cursor.Filled = true;
+
+        while Outer.Visible and ScreenGui.Parent do
+            local mPos = InputService:GetMouseLocation()
+
+            Cursor.Color = Library.AccentColor;
+            Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
+            Cursor.PointB = Vector2.new(mPos.X, mPos.Y) + Vector2.new(6, 14);
+            Cursor.PointC = Vector2.new(mPos.X, mPos.Y) + Vector2.new(-6, 14);
+
+            Cursor.Visible = not InputService.MouseIconEnabled;
+
+            RenderStepped:Wait();
+        end;
+
+        Cursor:Remove();
     end
-    Library.BlurEffect.Enabled = Outer.Visible
-
-    local oIcon = Mouse.Icon;
-    local State = InputService.MouseIconEnabled;
-
-    local Cursor = Drawing.new('Triangle');
-    Cursor.Thickness = 1;
-    Cursor.Filled = true;
-
-    while Outer.Visible and ScreenGui.Parent do
-        local mPos = InputService:GetMouseLocation()
-
-        Cursor.Color = Library.AccentColor;
-        Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
-        Cursor.PointB = Vector2.new(mPos.X, mPos.Y) + Vector2.new(6, 14);
-        Cursor.PointC = Vector2.new(mPos.X, mPos.Y) + Vector2.new(-6, 14);
-
-        Cursor.Visible = not InputService.MouseIconEnabled;
-
-        RenderStepped:Wait();
-    end;
-
-    Cursor:Remove();
-end
 
     Library:GiveSignal(InputService.InputBegan:Connect(function(Input, Processed)
         if Library.ToggleKeybind and typeof(Library.ToggleKeybind) == "table" and IsKeyPressed(Library.ToggleKeybind.Value) then
